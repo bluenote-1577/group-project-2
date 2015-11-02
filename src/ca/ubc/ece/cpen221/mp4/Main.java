@@ -6,6 +6,7 @@ import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
+import ca.ubc.ece.cpen221.mp4.items.vehicles.Motorcycle;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
 
@@ -57,6 +58,7 @@ public class Main {
 		addGnats(world);
 		addRabbits(world);
 		addFoxes(world);
+		addMotorcycles(world);
 		// TODO: You may add your own creatures here!
 	}
 
@@ -93,6 +95,15 @@ public class Main {
 			Rabbit rabbit = new Rabbit(rabbitAI, loc);
 			world.addItem(rabbit);
 			world.addActor(rabbit);
+		}
+	}
+	
+	private void addMotorcycles(World world) {
+		for (int i = 0; i < INITIAL_RABBITS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Motorcycle motorcycle = new Motorcycle(loc);
+			world.addItem(motorcycle);
+			world.addActor(motorcycle);
 		}
 	}
 }
