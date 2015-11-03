@@ -2,11 +2,14 @@ package ca.ubc.ece.cpen221.mp4.items.vehicles;
 
 import javax.swing.ImageIcon;
 
+import ca.ubc.ece.cpen221.mp4.Direction;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
+import ca.ubc.ece.cpen221.mp4.ai.MotorcycleAI;
+import ca.ubc.ece.cpen221.mp4.ai.VehicleAI;
 import ca.ubc.ece.cpen221.mp4.commands.Command;
-import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
+import ca.ubc.ece.cpen221.mp4.commands.DestroyCommand;
 
 public class Motorcycle implements Vehicle{
 	
@@ -18,11 +21,14 @@ public class Motorcycle implements Vehicle{
 	private Location location;
 	private boolean isDead;
 	private static final int VIEW_RANGE = 5;
-	private static final int COOLDOWN = 3;
+	private static final int COOLDOWN = 5;
+	private int speed = 0;
+	private final VehicleAI AI;
 	
 	public Motorcycle(Location loc){
 		location = loc;
 		isDead = false;
+		AI = new MotorcycleAI();
 	}
 	
 	@Override
@@ -79,18 +85,19 @@ public class Motorcycle implements Vehicle{
 	}
 	@Override
 	public Command getNextAction(World world) {
-		return new WaitCommand();
+		
+		return AI.getNextAction(world, this);
 		
 	}
 	@Override
 	public int getViewRange() {
 		// TODO Auto-generated method stub
-		return 0;
+		return VIEW_RANGE;
 	}
 	@Override
 	public int getSpeed() {
 		// TODO Auto-generated method stub
-		return 0;
+		return speed;
 	}
 
 	
