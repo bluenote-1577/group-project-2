@@ -29,10 +29,14 @@ public class DestroyCommand implements Command {
 	
 	public DestroyCommand(Vehicle vehicle, Direction direction){
 
+		if(direction == null)
+			targetLocation = null;
+		else{
+			Location target = new Location(vehicle.getLocation(),direction);
+			targetLocation = target;
+		}
 		this.vehicle = vehicle;
 		this.vehicle.setVelocityDirection(direction);
-		Location target = new Location(vehicle.getLocation(),direction);
-		targetLocation = target;
 		
 	}
 
@@ -40,7 +44,8 @@ public class DestroyCommand implements Command {
 	@Override
 	public void execute(World world) throws InvalidCommandException {
 		//kill the item
-
+		if (targetLocation == null)
+			return;
 		if(vehicle.isDead())
 			return;
 		if (!Util.isValidLocation(world, targetLocation)) {

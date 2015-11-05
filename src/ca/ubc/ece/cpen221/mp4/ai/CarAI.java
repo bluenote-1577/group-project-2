@@ -14,7 +14,7 @@ import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Vehicle;
 
-public class CarAI implements VehicleAI {
+public class CarAI extends AbstractVehicleAI {
 	/**
 	 * The cars don't want to kill anything, so it just tries to move into empty
 	 * spaces. It wants to move in the direction of the item that is the
@@ -34,7 +34,7 @@ public class CarAI implements VehicleAI {
 		int furthestActorDistance = 0;
 
 		for (Item item : surroundings) {
-			//we can run over grass, so ignore them
+			// we can run over grass, so ignore them
 			if (item.getName().equals("grass"))
 				;
 			else {
@@ -45,19 +45,8 @@ public class CarAI implements VehicleAI {
 					// get the direction the item is in and its distance
 					int distance = Math.max(Math.abs(south), Math.abs(east));
 					Direction furthestActorTemp = null;
-					if (south > 0) {
-						furthestActorTemp = Direction.SOUTH;
-						directionOfActors.remove(Direction.SOUTH);
-					} else if (south < 0) {
-						furthestActorTemp = Direction.NORTH;
-						directionOfActors.remove(Direction.NORTH);
-					} else if (east > 0) {
-						furthestActorTemp = Direction.EAST;
-						directionOfActors.remove(Direction.EAST);
-					} else if (east < 0) {
-						furthestActorTemp = Direction.WEST;
-						directionOfActors.remove(Direction.WEST);
-					}
+					
+					furthestActorTemp = Util.getDirectionTowards(vehicle.getLocation(), item.getLocation());
 
 					// if the item is further away than another item, then we
 					// want
@@ -72,15 +61,7 @@ public class CarAI implements VehicleAI {
 		}
 		// go to a random place is nothing are scanned.
 		if (furthestActor == null) {
-			if (vehicle.setVehicleSpeed(null) == true) {
-				Direction randomDirection = Util.getRandomDirection();
-				return new DestroyCommand(vehicle, randomDirection);
-			}
-
-			else {
-				return new DestroyCommand(vehicle, vehicle.getVelocityDirection());
-
-			}
+			return tryToMove(vehicle, Util.getRandomDirection());
 
 		}
 		// seek to move towards the furthest actor
@@ -88,13 +69,7 @@ public class CarAI implements VehicleAI {
 			// if there are actors in all directions, we move towards the
 			// furthest one
 			if (directionOfActors.isEmpty()) {
-				if (vehicle.setVehicleSpeed(furthestActor) == true) {
-					return new DestroyCommand(vehicle, furthestActor);
-				}
-
-				else {
-					return new DestroyCommand(vehicle, vehicle.getVelocityDirection());
-				}
+				return tryToMove(vehicle, furthestActor);
 			}
 			// there might be directions without actors, we want to go
 			// to a random direction without an actor.
@@ -103,26 +78,9 @@ public class CarAI implements VehicleAI {
 				while (!directionOfActors.contains(randomDirection)) {
 					randomDirection = Util.getRandomDirection();
 				}
-				if (vehicle.setVehicleSpeed(randomDirection) == true) {
-					return new DestroyCommand(vehicle, randomDirection);
-				}
-
-				else {
-					return new DestroyCommand(vehicle, vehicle.getVelocityDirection());
-				}
+				return tryToMove(vehicle, randomDirection);
 			}
 		}
-	}
-
-	public Boolean notDiagonal(Location location1, Location location2) {
-		if (location1.getY() - location2.getY() == 0)
-			return true;
-
-		if (location1.getX() - location2.getX() == 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

@@ -1,6 +1,7 @@
 package ca.ubc.ece.cpen221.mp4.ai;
 
 import ca.ubc.ece.cpen221.mp4.ArenaWorld;
+import ca.ubc.ece.cpen221.mp4.Direction;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.World;
 import ca.ubc.ece.cpen221.mp4.commands.Command;
@@ -21,12 +22,4 @@ public interface VehicleAI {
 	 */
 	Command getNextAction(World world, Vehicle vehicle);
 	
-	/**
-	 * checks the if 2 items are not diagonal to each other, i.e on a straight line 
-	 * west east or north south.
-	 * @param location1
-	 * @param location2
-	 * @return true if the 2 items are not diagonal to each other.
-	 */
-	Boolean notDiagonal(Location location1, Location location2);
 }

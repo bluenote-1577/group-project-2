@@ -16,12 +16,12 @@ public class Truck implements Vehicle{
 	private static final ImageIcon truckImage = Util.loadImage("trucks.gif");
 
 	private static final int MEAT_CALORIES = 0;
-	private static final int STRENGTH = 150;
+	private int STRENGTH = 150;
 
 	private Location location;
 	private boolean isDead;
-	private int currentCooldown = 15;
-	private static final int VIEW_RANGE = 7;
+	private int currentCooldown = COOLDOWN;
+	private static final int VIEW_RANGE = 20;
 	private static final int COOLDOWN = 25;
 	private final VehicleAI AI;
 	private Direction velocityDirection = null;
@@ -51,7 +51,7 @@ public class Truck implements Vehicle{
 
 	@Override
 	public String getName() {
-		return "truck";
+		return "Truck";
 	}
 
 	@Override
