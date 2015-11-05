@@ -6,7 +6,9 @@ import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
+import ca.ubc.ece.cpen221.mp4.items.vehicles.Car;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Motorcycle;
+import ca.ubc.ece.cpen221.mp4.items.vehicles.Truck;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
 
@@ -31,7 +33,7 @@ public class Main {
 	static final int INITIAL_HYENAS = INITIAL_GRASS / 32;
 	static final int INITIAL_CARS = INITIAL_GRASS / 100;
 	static final int INITIAL_TRUCKS = INITIAL_GRASS / 150;
-	static final int INITIAL_MOTORCYCLES = INITIAL_GRASS / 64;
+	static final int INITIAL_MOTORCYCLES = INITIAL_GRASS / 69;
 	static final int INITIAL_MANS = INITIAL_GRASS / 150;
 	static final int INITIAL_WOMANS = INITIAL_GRASS / 100;
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
@@ -59,6 +61,8 @@ public class Main {
 		addRabbits(world);
 		addFoxes(world);
 		addMotorcycles(world);
+		addCars(world);
+		addTrucks(world);
 		// TODO: You may add your own creatures here!
 	}
 
@@ -99,11 +103,29 @@ public class Main {
 	}
 	
 	private void addMotorcycles(World world) {
-		for (int i = 0; i < INITIAL_RABBITS; i++) {
+		for (int i = 0; i < INITIAL_MOTORCYCLES; i++) {
 			Location loc = Util.getRandomEmptyLocation(world);
 			Motorcycle motorcycle = new Motorcycle(loc);
 			world.addItem(motorcycle);
 			world.addActor(motorcycle);
+		}
+	}
+	
+	private void addCars(World world) {
+		for (int i = 0; i < INITIAL_CARS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Car car = new Car(loc);
+			world.addItem(car);
+			world.addActor(car);
+		}
+	}
+	
+	private void addTrucks(World world) {
+		for (int i = 0; i < INITIAL_TRUCKS ; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Truck truck = new Truck(loc);
+			world.addItem(truck);
+			world.addActor(truck);
 		}
 	}
 }

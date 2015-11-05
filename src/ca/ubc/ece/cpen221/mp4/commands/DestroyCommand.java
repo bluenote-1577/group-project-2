@@ -42,7 +42,8 @@ public class DestroyCommand implements Command {
 		if(vehicle.isDead())
 			return;
 		if (!Util.isValidLocation(world, targetLocation)) {
-			throw new InvalidCommandException("Invalid MoveCommand: Invalid/non-empty target location");
+			return;
+			//throw new InvalidCommandException("Invalid MoveCommand: Invalid/non-empty target location");
 		}
 		if (vehicle.getMovingRange() < targetLocation.getDistance(targetLocation)) {
 			throw new InvalidCommandException("Invalid MoveCommand: Target location farther than moving range");
@@ -51,7 +52,11 @@ public class DestroyCommand implements Command {
 		
 		for (Item item : world.getItems()) {
 			if (item.getLocation().equals(targetLocation)) {
-				if (vehicle.getStrength() >= item.getStrength()){
+				if (vehicle.getStrength() == item.getStrength()){
+					item.loseEnergy(Integer.MAX_VALUE);
+					vehicle.loseEnergy(Integer.MAX_VALUE);
+				}
+				if (vehicle.getStrength() > item.getStrength()){
 					item.loseEnergy(Integer.MAX_VALUE);
 				}
 				

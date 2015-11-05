@@ -1,6 +1,7 @@
 package ca.ubc.ece.cpen221.mp4.items.vehicles;
 
 import ca.ubc.ece.cpen221.mp4.Actor;
+import ca.ubc.ece.cpen221.mp4.Direction;
 import ca.ubc.ece.cpen221.mp4.items.MoveableItem;
 
 public interface Vehicle extends MoveableItem, Actor {
@@ -17,10 +18,30 @@ public interface Vehicle extends MoveableItem, Actor {
 	int getViewRange();
 	
 	/**
-	 * Returns the speed of this vehicle. The speed of the vehicle
-	 * has to be below a certain point for the vehicle to turn.
+	 * Returns the direction of velocity of this vehicle. 
+	 * i.e. the way the vehicle has been moving.
 	 * 
-	 * @return the speed of the vehicle
+	 * @return the direction which this vehicle was most
+	 * recently moving.
 	 */
-	int getSpeed();
+	Direction getVelocityDirection();
+	
+	/**
+	 * sets the direction of the velocity of the vehicle.
+	 * i.e which way it was last moving. Used in AI.
+	 * @param direction
+	 */
+	void setVelocityDirection (Direction direction);
+	
+	/**
+	 * changes the vehicle speed. Either reduces the cooldown
+	 * of the vehicle when it is accelerating in one direction,
+	 *  or makes the cooldown larger if the vehicle is decelerating and
+	 *  trying to turn or to stop.
+	 * @param direction
+	 * @return true if the vehicle is at max cooldown, the minimum speed for turning.
+	 * 
+	 */
+	
+	Boolean setVehicleSpeed(Direction direction);
 }
