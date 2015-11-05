@@ -33,7 +33,7 @@ public class Main {
 	static final int INITIAL_HYENAS = INITIAL_GRASS / 32;
 	static final int INITIAL_CARS = INITIAL_GRASS / 100;
 	static final int INITIAL_TRUCKS = INITIAL_GRASS / 150;
-	static final int INITIAL_MOTORCYCLES = INITIAL_GRASS / 69;
+	static final int INITIAL_MOTORCYCLES = INITIAL_GRASS / 25;
 	static final int INITIAL_MANS = INITIAL_GRASS / 150;
 	static final int INITIAL_WOMANS = INITIAL_GRASS / 100;
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;

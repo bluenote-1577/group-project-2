@@ -36,6 +36,7 @@ public class MotorcycleAI implements VehicleAI {
 					//and which direction it is.
 					int south = item.getLocation().getY() - vehicle.getLocation().getY();
 					int east = item.getLocation().getX() - vehicle.getLocation().getX();
+					//get the direction the item is in and its distance
 					int distance = Math.max(Math.abs(south), Math.abs(east));
 					Direction gnatDirection = null;
 					if (south > 0){
@@ -61,7 +62,7 @@ public class MotorcycleAI implements VehicleAI {
 		//do nothing if no gnats are scanned
 		if (closestGnat == null){
 			if(vehicle.setVehicleSpeed(null) == true){
-				vehicle.setVelocityDirection(null);
+				//vehicle.setVelocityDirection(null);
 				return new WaitCommand();
 			}
 			
@@ -75,7 +76,7 @@ public class MotorcycleAI implements VehicleAI {
 		//seek to destroy the closest gnat
 		else{
 			if(vehicle.setVehicleSpeed(closestGnat) == true){
-				vehicle.setVelocityDirection(closestGnat);
+			//	vehicle.setVelocityDirection(closestGnat);
 				return new DestroyCommand(vehicle,closestGnat);
 			}
 			

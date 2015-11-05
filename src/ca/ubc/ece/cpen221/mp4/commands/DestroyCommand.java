@@ -30,10 +30,12 @@ public class DestroyCommand implements Command {
 	public DestroyCommand(Vehicle vehicle, Direction direction){
 
 		this.vehicle = vehicle;
+		this.vehicle.setVelocityDirection(direction);
 		Location target = new Location(vehicle.getLocation(),direction);
 		targetLocation = target;
 		
 	}
+
 
 	@Override
 	public void execute(World world) throws InvalidCommandException {

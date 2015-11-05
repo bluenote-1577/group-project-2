@@ -23,13 +23,14 @@ public class Car implements Vehicle {
 	private static final int COOLDOWN = 20;
 	private final VehicleAI AI;
 	private Direction velocityDirection = null;
-	private final int ACCELERATION = 2;
+	private final int ACCELERATION = 3;
 
-	public Car (Location loc){
+	public Car(Location loc) {
 		location = loc;
 		isDead = false;
 		AI = new CarAI();
 	}
+
 	@Override
 	public void moveTo(Location targetLocation) {
 		location = targetLocation;
@@ -104,14 +105,46 @@ public class Car implements Vehicle {
 	public void setVelocityDirection(Direction direction) {
 		velocityDirection = direction;
 
-		if (direction == null){
+		if (direction == null) {
 			this.velocityDirection = null;
 		}
 	}
 
 	@Override
 	public Boolean setVehicleSpeed(Direction direction) {
-		return null;
+		// true is returned if the vehicle is allowed to turn, i.e. the cooldown
+		// is at its max
+		if (direction == null) {
+			// decelerates
+			if (currentCooldown < COOLDOWN) {
+				currentCooldown = currentCooldown + ACCELERATION;
+				return false;
+			}
+
+			else
+				return true;
+		}
+
+		if (direction != velocityDirection) {
+			if (currentCooldown < COOLDOWN) {
+				currentCooldown = currentCooldown + ACCELERATION;
+				return false;
+			}
+
+			else
+				return true;
+		}
+
+		else { // accelerate in the same direction
+			if (currentCooldown - ACCELERATION < 0) {
+				return false;
+			}
+			;
+
+			currentCooldown = currentCooldown - ACCELERATION;
+			return false;
+		}
+
 	}
 
 }
