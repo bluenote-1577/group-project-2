@@ -38,10 +38,8 @@ public class MotorcycleAI extends AbstractVehicleAI {
 				if (notDiagonal(item.getLocation(), vehicle.getLocation())) {
 					// discern which gnat is the closest,
 					// and which direction it is.
-					int south = item.getLocation().getY() - vehicle.getLocation().getY();
-					int east = item.getLocation().getX() - vehicle.getLocation().getX();
-					// get the direction the item is in and its distance
-					int distance = Math.max(Math.abs(south), Math.abs(east));
+					
+					int distance = vehicle.getLocation().getDistance(item.getLocation());
 					Direction gnatDirection = null;
 					gnatDirection = Util.getDirectionTowards(vehicle.getLocation(),item.getLocation());
 

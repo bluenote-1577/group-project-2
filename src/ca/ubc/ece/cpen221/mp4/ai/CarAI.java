@@ -3,14 +3,10 @@ package ca.ubc.ece.cpen221.mp4.ai;
 import java.util.HashSet;
 import java.util.Set;
 
-import ca.ubc.ece.cpen221.mp4.Actor;
 import ca.ubc.ece.cpen221.mp4.Direction;
-import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
 import ca.ubc.ece.cpen221.mp4.commands.Command;
-import ca.ubc.ece.cpen221.mp4.commands.DestroyCommand;
-import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Vehicle;
 
@@ -40,10 +36,8 @@ public class CarAI extends AbstractVehicleAI {
 			else {
 				if (notDiagonal(item.getLocation(), vehicle.getLocation())) {
 					// find out which actor is furthest and move towards it.
-					int south = item.getLocation().getY() - vehicle.getLocation().getY();
-					int east = item.getLocation().getX() - vehicle.getLocation().getX();
 					// get the direction the item is in and its distance
-					int distance = Math.max(Math.abs(south), Math.abs(east));
+					int distance = vehicle.getLocation().getDistance(item.getLocation());
 					Direction furthestActorTemp = null;
 					
 					furthestActorTemp = Util.getDirectionTowards(vehicle.getLocation(), item.getLocation());

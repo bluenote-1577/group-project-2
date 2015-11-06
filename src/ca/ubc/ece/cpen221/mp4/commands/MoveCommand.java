@@ -38,6 +38,10 @@ public final class MoveCommand implements Command {
 			return;
 		}
 		if (!Util.isValidLocation(world, targetLocation) || !Util.isLocationEmpty(world, targetLocation)) {
+			System.out.print(item.getLocation());
+			System.out.print(item.getName());
+			System.out.print(Util.isValidLocation(world, targetLocation));
+			System.out.print(Util.isLocationEmpty(world, targetLocation));
 			throw new InvalidCommandException("Invalid MoveCommand: Invalid/non-empty target location");
 		}
 		if (item.getMovingRange() < targetLocation.getDistance(item.getLocation())) {

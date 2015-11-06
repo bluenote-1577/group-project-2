@@ -56,7 +56,7 @@ public class Rabbit implements ArenaAnimal {
 
 	@Override
 	public void eat(Food food) {
-		// Note that energy does not exceed energy limit.
+           		// Note that energy does not exceed energy limit.
 		energy = Math.min(MAX_ENERGY, energy + food.getPlantCalories());
 	}
 

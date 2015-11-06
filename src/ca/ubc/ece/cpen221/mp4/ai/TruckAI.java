@@ -32,11 +32,10 @@ public class TruckAI extends AbstractVehicleAI {
 		for (Item item : surroundings) {
 			// search for motorcycles in our view range
 			if (item.getName() == "Motorcycle") {
-				// discern which motorcycle is the closest,
+				//find out which motorcycle is the closest,
 				// and which direction it is.
-				int south = item.getLocation().getY() - vehicle.getLocation().getY();
-				int east = item.getLocation().getX() - vehicle.getLocation().getX();
-				int distance = Math.abs(south) + Math.abs(east);
+				
+				int distance = vehicle.getLocation().getDistance(item.getLocation());
 				Direction direction = Util.getDirectionTowards(vehicle.getLocation(), item.getLocation());
 
 				if (distance < closestMotorcycleDistance || closestMotorcycleDistance == 0) {
@@ -47,10 +46,8 @@ public class TruckAI extends AbstractVehicleAI {
 
 			if (item.getName() == "Truck") {
 				// discern which motorcycle is the closest,
-				// and which direction it is.
-				int south = item.getLocation().getY() - vehicle.getLocation().getY();
-				int east = item.getLocation().getX() - vehicle.getLocation().getX();
-				int distance = Math.abs(south) + Math.abs(east);
+
+				int distance = vehicle.getLocation().getDistance(item.getLocation());
 				Direction direction = Util.getDirectionTowards(vehicle.getLocation(), item.getLocation());
 
 				if (distance < closestTruckDistance || closestTruckDistance == 0) {

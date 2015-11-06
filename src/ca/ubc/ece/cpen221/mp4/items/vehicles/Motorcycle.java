@@ -16,7 +16,7 @@ public class Motorcycle implements Vehicle{
 	private static final ImageIcon motorcycleImage = Util.loadImage("motorcycles.gif");
 
 	private static final int MEAT_CALORIES = 0;
-	private static final int STRENGTH = 80;
+	private static final int STRENGTH = 101;
 
 	private Location location;
 	private boolean isDead;
