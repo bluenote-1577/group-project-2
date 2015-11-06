@@ -145,11 +145,11 @@ public class RabbitAI extends AbstractAI {
 		 */
 
 		if (animal.getEnergy() >= animal.getMinimumBreedingEnergy() && otherRabbits.size() < 2 &&
-				grasses.size() > 1) {
+				grasses.size() > 3) {
 			return new BreedCommand(animal, new Location(animal.getLocation(), breedingDirection));
 		}
 
-		if (animal.getEnergy() <= animal.getMinimumBreedingEnergy() * 2) {
+		if (animal.getEnergy() <= animal.getMinimumBreedingEnergy() * 4) {
 
 			if (validGrass.isEmpty()) {
 				if (!grasses.isEmpty()) {
