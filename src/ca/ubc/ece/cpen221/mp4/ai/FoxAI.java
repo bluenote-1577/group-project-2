@@ -32,14 +32,94 @@ public class FoxAI extends AbstractAI {
 	@Override
 	public Command getNextAction(ArenaWorld world, ArenaAnimal animal) {
 		Boolean rabbitFound = false;
-		List<Item> grasses = new ArrayList<Item>();
+		List<Item> nearbyRabbits = new ArrayList<Item>();
 		Set<Item> otherFoxes = new HashSet<Item>();
 		Set<Item> rabbits = new HashSet<Item>();
 		Set<Direction> validDirections = getValidDirections(world, animal);
-
+		int closestRabbit = Integer.MAX_VALUE;
+		
+		Location rabbitCenter = new Location(0,0);
 		Location foxCenter = new Location(0, 0);
-		Location rabbitCenter = new Location(0, 0);
-		return new WaitCommand();
+		Direction moveDirection;
+		Direction breedDirection;
+
+		for (Item item : world.searchSurroundings(animal)) {
+
+			if (item.getName().equals("Fox")) {
+				otherFoxes.add(item);
+				foxCenter = new Location(foxCenter.getX() + item.getLocation().getX(),
+						foxCenter.getY() + item.getLocation().getY());
+			}
+
+			else {
+				if (item.getName().equals("Rabbit")) {
+					rabbits.add(item);
+					rabbitFound = true;
+					rabbitCenter = new Location(rabbitCenter.getX() + item.getLocation().getX(),
+							rabbitCenter.getY() + item.getLocation().getY());
+
+				}
+			}
+
+		}
+		foxCenter = new Location(foxCenter.getX()/otherFoxes.size(), 
+				foxCenter.getY()/otherFoxes.size());
+		
+		if (validDirections.isEmpty()) return new WaitCommand();
+		if (animal.getEnergy() == animal.getMaxEnergy()){
+			breedDirection = oppositeDir(Util.getDirectionTowards(animal.getLocation(),
+					foxCenter));
+			while (!validDirections.contains(breedDirection)){
+				breedDirection = Util.getRandomDirection();
+			}
+			return new BreedCommand(animal,new Location(animal.getLocation(),breedDirection));
+		}
+		//this branch executes if a rabbit is found
+		if(rabbitFound){
+
+			nearbyRabbits = rabbitsAvailable(rabbits, animal);
+			
+			if(!nearbyRabbits.isEmpty()) return new EatCommand(animal, nearbyRabbits.get(0));
+			
+			for(Item rabbit : rabbits){
+				int rabbitDistance = animal.getLocation().getDistance(rabbit.getLocation());
+				if(rabbitDistance <= closestRabbit){
+					rabbitCenter = rabbit.getLocation();
+					closestRabbit = rabbitDistance;
+				}
+			}
+			
+			moveDirection = Util.getDirectionTowards(animal.getLocation(),
+					rabbitCenter);
+			while (!validDirections.contains(moveDirection)){
+				moveDirection = Util.getRandomDirection();
+				
+			}
+			
+			return new MoveCommand(animal, new Location(animal.getLocation(),moveDirection));
+			
+		}
+		
+		//this branch executes if a rabbit is not found
+		else{
+			Direction randomDirection = Util.getRandomDirection();
+			moveDirection = oppositeDir(Util.getDirectionTowards(animal.getLocation(),
+					foxCenter));
+			while (!validDirections.contains(moveDirection)){
+				moveDirection = Util.getRandomDirection();
+			}
+			
+			while(!validDirections.contains(randomDirection)){
+				randomDirection = Util.getRandomDirection();
+			}
+			if (otherFoxes.size() > 1) return new MoveCommand(animal,
+					new Location (animal.getLocation(), moveDirection));
+			
+			return new MoveCommand (animal,
+					new Location(animal.getLocation(),randomDirection));
+		}
+		
+
 	}
 
 	private Set<Direction> getValidDirections(ArenaWorld world, ArenaAnimal animal) {
@@ -79,20 +159,20 @@ public class FoxAI extends AbstractAI {
 		return toReturn;
 	}
 
-	private ArrayList<Item> rabbitsAvailable(List<Item> rabbits, ArenaAnimal animal) {
+	private ArrayList<Item> rabbitsAvailable(Set<Item> rabbits, ArenaAnimal animal) {
 		ArrayList<Item> toReturn = new ArrayList<Item>();
-		for (Item grass : grasses) {
-			if (grass.getLocation().equals(new Location(animal.getLocation(), Direction.EAST))) {
-				toReturn.add(grass);
+		for (Item rabbit : rabbits) {
+			if (rabbit.getLocation().equals(new Location(animal.getLocation(), Direction.EAST))) {
+				toReturn.add(rabbit);
 			}
-			if (grass.getLocation().equals(new Location(animal.getLocation(), Direction.WEST))) {
-				toReturn.add(grass);
+			if (rabbit.getLocation().equals(new Location(animal.getLocation(), Direction.WEST))) {
+				toReturn.add(rabbit);
 			}
-			if (grass.getLocation().equals(new Location(animal.getLocation(), Direction.SOUTH))) {
-				toReturn.add(grass);
+			if (rabbit.getLocation().equals(new Location(animal.getLocation(), Direction.SOUTH))) {
+				toReturn.add(rabbit);
 			}
-			if (grass.getLocation().equals(new Location(animal.getLocation(), Direction.NORTH))) {
-				toReturn.add(grass);
+			if (rabbit.getLocation().equals(new Location(animal.getLocation(), Direction.NORTH))) {
+				toReturn.add(rabbit);
 			}
 		}
 		return toReturn;

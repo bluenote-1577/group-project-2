@@ -88,14 +88,9 @@ public class RabbitAI extends AbstractAI {
 
 		if (foxFound) {
 			foxCenter = new Location(foxCenter.getX() / foxes.size(), foxCenter.getY() / foxes.size());
-			// Direction foxDirectionWE = Util
-			// .getDirectionTowards(new Location(animal.getLocation().getX(),
-			// foxCenter.getX()), foxCenter);
-			// Direction foxDirectionNS = Util
-			// .getDirectionTowards(new Location(animal.getLocation().getY(),
-			// foxCenter.getY()), foxCenter);
+
 			breedingDirection = oppositeDir(Util.getDirectionTowards(animal.getLocation(), foxCenter));
-			Location totalCenter = new Location((foxCenter.getX()  + rabbitCenter.getX()) / 2,
+			Location totalCenter = new Location((foxCenter.getX() + rabbitCenter.getX()) / 2,
 					(foxCenter.getY() + rabbitCenter.getY()) / 2);
 			moveDirection = oppositeDir(Util.getDirectionTowards(animal.getLocation(), totalCenter));
 
@@ -104,8 +99,7 @@ public class RabbitAI extends AbstractAI {
 			if (validDirections.isEmpty()) {
 				return new WaitCommand();
 			}
-			if (!validDirections.contains(breedingDirection) ||
-					!validDirections.contains(moveDirection)) {
+			if (!validDirections.contains(breedingDirection) || !validDirections.contains(moveDirection)) {
 				while (!validDirections.contains(breedingDirection)) {
 					breedingDirection = Util.getRandomDirection();
 				}
@@ -144,36 +138,27 @@ public class RabbitAI extends AbstractAI {
 		 * If foxes are seen, moving takes priority over eating.
 		 */
 
-		if (animal.getEnergy() >= animal.getMinimumBreedingEnergy() && otherRabbits.size() < 2 &&
-				grasses.size() > 3) {
+		if (animal.getEnergy() == animal.getMaxEnergy() && otherRabbits.size() < 2 && grasses.size() > 3) {
 			return new BreedCommand(animal, new Location(animal.getLocation(), breedingDirection));
 		}
 
-		if (animal.getEnergy() <= animal.getMinimumBreedingEnergy() * 4) {
-
-			if (validGrass.isEmpty()) {
-				if (!grasses.isEmpty()) {
-					Direction grassDirection = Util.getDirectionTowards(animal.getLocation(),
-							grasses.get(0).getLocation());
-					if (!validDirections.contains(grassDirection))
-						grassDirection = moveDirection;
-					return new MoveCommand(animal, new Location(animal.getLocation(), grassDirection));
-				}
-
-				else
-					return new MoveCommand(animal, new Location(animal.getLocation(), moveDirection));
-			} else {
-				return new EatCommand(animal, validGrass.get(0));
-			}
+		if (animal.getEnergy() == animal.getMaxEnergy()) {
+			return new MoveCommand(animal, new Location(animal.getLocation(),moveDirection));
 		}
-
-		else {
-			if (validGrass.isEmpty()) {
-				return new MoveCommand(animal, new Location(animal.getLocation(), moveDirection));
-
-			} else {
-				return new EatCommand(animal, validGrass.get(0));
+		
+		if (validGrass.isEmpty()) {
+			if (!grasses.isEmpty()) {
+				Direction grassDirection = Util.getDirectionTowards(animal.getLocation(),
+						grasses.get(0).getLocation());
+				if (!validDirections.contains(grassDirection))
+					grassDirection = moveDirection;
+				return new MoveCommand(animal, new Location(animal.getLocation(), grassDirection));
 			}
+
+			else
+				return new MoveCommand(animal, new Location(animal.getLocation(), moveDirection));
+		} else {
+			return new EatCommand(animal, validGrass.get(0));
 		}
 
 	}
