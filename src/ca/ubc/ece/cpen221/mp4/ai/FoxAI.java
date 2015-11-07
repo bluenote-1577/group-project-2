@@ -75,7 +75,7 @@ public class FoxAI extends AbstractAI {
 		
 		if (validDirections.isEmpty()) return new WaitCommand();
 		if ((animal.getEnergy() > animal.getMinimumBreedingEnergy() && 
-				otherFoxes.size() > animal.getViewRange()) ||
+				otherFoxes.size() < animal.getViewRange()/2) ||
 				animal.getEnergy() == animal.getMaxEnergy()){
 			breedDirection = oppositeDir(Util.getDirectionTowards(animal.getLocation(),
 					foxCenter));
