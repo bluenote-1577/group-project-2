@@ -28,6 +28,14 @@ public class FoxAI extends AbstractAI {
 	public FoxAI() {
 
 	}
+	
+	/**
+	 * My Fox AI:
+	 * The fox first scans everything in its view.
+	 * The fox then breeds if it has maximum energy. If not, it goes
+	 * hunting for rabbits near by. Otherwise, it moves in random directions
+	 * until it sees a rabbit to chase.
+	 */
 
 	@Override
 	public Command getNextAction(ArenaWorld world, ArenaAnimal animal) {
@@ -66,7 +74,9 @@ public class FoxAI extends AbstractAI {
 				foxCenter.getY()/otherFoxes.size());
 		
 		if (validDirections.isEmpty()) return new WaitCommand();
-		if (animal.getEnergy() == animal.getMaxEnergy()){
+		if ((animal.getEnergy() > animal.getMinimumBreedingEnergy() && 
+				otherFoxes.size() > animal.getViewRange()) ||
+				animal.getEnergy() == animal.getMaxEnergy()){
 			breedDirection = oppositeDir(Util.getDirectionTowards(animal.getLocation(),
 					foxCenter));
 			while (!validDirections.contains(breedDirection)){

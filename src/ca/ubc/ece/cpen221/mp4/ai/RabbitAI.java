@@ -138,12 +138,12 @@ public class RabbitAI extends AbstractAI {
 		 * If foxes are seen, moving takes priority over eating.
 		 */
 
-		if (animal.getEnergy() == animal.getMaxEnergy() && otherRabbits.size() < 2 && grasses.size() > 3) {
+		if (animal.getEnergy() > animal.getMinimumBreedingEnergy() && otherRabbits.size() < 2 && grasses.size() > 3) {
 			return new BreedCommand(animal, new Location(animal.getLocation(), breedingDirection));
 		}
 
 		if (animal.getEnergy() == animal.getMaxEnergy()) {
-			return new MoveCommand(animal, new Location(animal.getLocation(),moveDirection));
+			return new BreedCommand(animal, new Location(animal.getLocation(),moveDirection));
 		}
 		
 		if (validGrass.isEmpty()) {
