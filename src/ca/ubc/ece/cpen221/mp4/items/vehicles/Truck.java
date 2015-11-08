@@ -25,7 +25,7 @@ public class Truck implements Vehicle{
 	private static final int COOLDOWN = 25;
 	private final VehicleAI AI;
 	private Direction velocityDirection = null;
-	private final int ACCELERATION = 2;
+	private final int ACCELERATION = 4;
 
 	
 	public Truck(Location loc){
