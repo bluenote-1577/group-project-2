@@ -23,7 +23,7 @@ public class Car implements Vehicle {
 	private static final int COOLDOWN = 20;
 	private final VehicleAI AI;
 	private Direction velocityDirection = null;
-	private final int ACCELERATION = 3;
+	private final int ACCELERATION = 5;
 
 	public Car(Location loc) {
 		location = loc;
