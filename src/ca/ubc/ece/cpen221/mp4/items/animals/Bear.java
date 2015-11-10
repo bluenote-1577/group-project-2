@@ -9,18 +9,15 @@ import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 
 public class Bear extends AbstractArenaAnimal {
 	
-	private static final ImageIcon bearImage = Util.loadImage("bear.gif");
-	
 	//bear constructor 
 	public Bear(AI bearAI, Location initial_location){
-	 	
-		this.setImage(bearImage); 
-		
-		
+		 
+		setImage(Util.loadImage("bear.gif")); 
+		setAi(bearAI); 
 		
 		//initialize all the protected methods from AbstractArenaAnimal 
 		setINITIAL_ENERGY(100);
-		//setEnergy(90);
+		setEnergy(100); 
 		setMAX_ENERGY(150);
 		setSTRENGTH(200);
 		setVIEW_RANGE(1);
@@ -33,7 +30,6 @@ public class Bear extends AbstractArenaAnimal {
 
 	@Override
 	public LivingItem breed() {
-		// TODO Auto-generated method stub
 		Bear child = new Bear(getAi(), getLocation()); 
 		child.setEnergy(getEnergy() / 2);
 		this.setEnergy(getEnergy() / 2);
@@ -42,7 +38,7 @@ public class Bear extends AbstractArenaAnimal {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Bear";
 	}
+	
 }

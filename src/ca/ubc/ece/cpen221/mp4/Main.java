@@ -63,6 +63,9 @@ public class Main {
 		addMotorcycles(world);
 		addCars(world);
 		addTrucks(world);
+		addBears(world); 
+		addHyenas(world);
+		addTigers(world); 
 		// TODO: You may add your own creatures here!
 	}
 
@@ -126,6 +129,36 @@ public class Main {
 			Truck truck = new Truck(loc);
 			world.addItem(truck);
 			world.addActor(truck);
+		}
+	}
+	
+	private void addBears(World world) {
+		AI bearAI = new ArenaAnimalAI(100); 
+		for (int i = 0; i < INITIAL_BEARS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Bear bear = new Bear(bearAI, loc);
+			world.addItem(bear);
+			world.addActor(bear);
+		}
+	}
+	
+	private void addHyenas(World world) {
+		AI hyenaAI = new ArenaAnimalAI(80); 
+		for (int i = 0; i < INITIAL_BEARS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Hyena hyena = new Hyena(hyenaAI, loc);
+			world.addItem(hyena);
+			world.addActor(hyena);
+		}
+	}
+	
+	private void addTigers(World world) {
+		AI tigerAI = new ArenaAnimalAI(120); 
+		for (int i = 0; i < INITIAL_BEARS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Tiger tiger = new Tiger(tigerAI, loc);
+			world.addItem(tiger);
+			world.addActor(tiger);
 		}
 	}
 }
