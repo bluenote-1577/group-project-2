@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
+import ca.ubc.ece.cpen221.mp4.items.Mario.redShell;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Car;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Motorcycle;
@@ -66,6 +67,7 @@ public class Main {
 		addBears(world); 
 		addHyenas(world);
 		addTigers(world); 
+		addRedShells(world); 
 		// TODO: You may add your own creatures here!
 	}
 
@@ -159,6 +161,17 @@ public class Main {
 			Tiger tiger = new Tiger(tigerAI, loc);
 			world.addItem(tiger);
 			world.addActor(tiger);
+		}
+	}
+	
+	//rabbits released red shells for targeting bears and hyenas  
+	private void addRedShells(World world) {
+		AI red_shellAI = new RedShellAI(120); 
+		for (int i = 0; i < 30; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			redShell redShell = new redShell(red_shellAI, loc);
+			world.addItem(redShell);
+			world.addActor(redShell);
 		}
 	}
 }

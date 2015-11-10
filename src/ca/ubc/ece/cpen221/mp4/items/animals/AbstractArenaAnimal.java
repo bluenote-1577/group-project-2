@@ -21,8 +21,8 @@ public abstract class AbstractArenaAnimal implements ArenaAnimal { // abstract
 	private int VIEW_RANGE;
 	private int MIN_BREEDING_ENERGY;
 	private int COOLDOWN;
-	private ImageIcon image;
-	private boolean isDead;
+	private ImageIcon image;  
+	private boolean isDead = false;    //change back maybe 
 
 	private AI ai;
 
@@ -36,7 +36,7 @@ public abstract class AbstractArenaAnimal implements ArenaAnimal { // abstract
 	public void eat(Food food) {
 		energy = Math.min(MAX_ENERGY, energy + food.getMeatCalories());
 	}
-
+	
 	protected void setINITIAL_ENERGY(int i) {
 		this.INITIAL_ENERGY = i;
 	}
@@ -114,7 +114,7 @@ public abstract class AbstractArenaAnimal implements ArenaAnimal { // abstract
 
 	@Override
 	public Command getNextAction(World world) {
-		Command nextAction = ai.getNextAction(world, this);
+		Command nextAction = getAi().getNextAction(world, this);
 		this.energy--; // Loses 1 energy regardless of action.
 		return nextAction;
 	}
@@ -148,4 +148,17 @@ public abstract class AbstractArenaAnimal implements ArenaAnimal { // abstract
 	public void moveTo(Location targetLocation) {
 		location = targetLocation;
 	}
+
+	protected void setImage(ImageIcon image) {
+		this.image = image;
+	}
+
+	protected AI getAi() {
+		return ai;
+	}
+
+	protected void setAi(AI ai) {
+		this.ai = ai;
+	}
+
 }
