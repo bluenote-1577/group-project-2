@@ -12,12 +12,18 @@ import ca.ubc.ece.cpen221.mp4.commands.EatCommand;
 import ca.ubc.ece.cpen221.mp4.commands.MoveCommand;
 import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.Item;
+import ca.ubc.ece.cpen221.mp4.items.animals.AbstractArenaAnimal;
 import ca.ubc.ece.cpen221.mp4.items.animals.ArenaAnimal;
 
-public class RedShellAI implements AI {
+public class ShellAI implements AI {
+	
+	/*
+	 * Shells behave the same way as other arena animals(bears, tigers and hyenas except 
+	 * they target bears and hyenas instead of rabbits and gnats. 
+	 */
 	private int energy;
 
-	public RedShellAI(int energy) {
+	public ShellAI(int energy) {
 		this.energy = energy;
 	}
 
@@ -47,8 +53,9 @@ public class RedShellAI implements AI {
 			Item item = it.next();
 			if ((item.getName().equals("Hyena") || item.getName().equals("Bear"))
 					&& (current.getDistance(item.getLocation()) == 1)) {
-				return new EatCommand(animal, item); // arena animals eat gnats
-														// and rabbits
+				animal.loseEnergy(Integer.MIN_VALUE); 
+				return new EatCommand(animal, item); // shells kill hyenas
+														// and bears
 			}
 		}
 		if (Util.isValidLocation(world, targetLocation) && this.isLocationEmpty(world, animal, targetLocation)) {

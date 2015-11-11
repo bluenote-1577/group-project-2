@@ -22,7 +22,7 @@ public abstract class AbstractArenaAnimal implements ArenaAnimal { // abstract
 	private int MIN_BREEDING_ENERGY;
 	private int COOLDOWN;
 	private ImageIcon image;  
-	private boolean isDead = false;    //change back maybe 
+	private boolean isDead;
 
 	private AI ai;
 

@@ -5,7 +5,9 @@ import javax.swing.SwingUtilities;
 import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
-import ca.ubc.ece.cpen221.mp4.items.Mario.redShell;
+import ca.ubc.ece.cpen221.mp4.items.Mario.BlueShell;
+import ca.ubc.ece.cpen221.mp4.items.Mario.GreenShell;
+import ca.ubc.ece.cpen221.mp4.items.Mario.RedShell;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Car;
 import ca.ubc.ece.cpen221.mp4.items.vehicles.Motorcycle;
@@ -38,6 +40,7 @@ public class Main {
 	static final int INITIAL_MANS = INITIAL_GRASS / 150;
 	static final int INITIAL_WOMANS = INITIAL_GRASS / 100;
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
+	static final int INITIAL_SHELLS = 7; 
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -68,6 +71,8 @@ public class Main {
 		addHyenas(world);
 		addTigers(world); 
 		addRedShells(world); 
+		addGreenShells(world);
+		addBlueShells(world); 
 		// TODO: You may add your own creatures here!
 	}
 
@@ -164,14 +169,33 @@ public class Main {
 		}
 	}
 	
-	//rabbits released red shells for targeting bears and hyenas  
 	private void addRedShells(World world) {
-		AI red_shellAI = new RedShellAI(120); 
-		for (int i = 0; i < 30; i++) {
+		AI redShellAI = new ShellAI(120); 
+		for (int i = 0; i < INITIAL_SHELLS; i++) {
 			Location loc = Util.getRandomEmptyLocation(world);
-			redShell redShell = new redShell(red_shellAI, loc);
+			RedShell redShell = new RedShell(redShellAI, loc);
 			world.addItem(redShell);
 			world.addActor(redShell);
+		}
+	}
+	
+	private void addGreenShells(World world) {
+		AI greenShellAI = new ShellAI(150); 
+		for (int i = 0; i < INITIAL_SHELLS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			GreenShell greenShell = new GreenShell(greenShellAI, loc);
+			world.addItem(greenShell);
+			world.addActor(greenShell);
+		}
+	}
+	
+	private void addBlueShells(World world) {
+		AI blueShellAI = new ShellAI(300); 
+		for (int i = 0; i < INITIAL_SHELLS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			BlueShell blueShell = new BlueShell(blueShellAI, loc);
+			world.addItem(blueShell);
+			world.addActor(blueShell);
 		}
 	}
 }
